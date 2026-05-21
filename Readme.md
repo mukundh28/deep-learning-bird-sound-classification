@@ -53,24 +53,15 @@ Raw time-domain audio waves contain immense sample rates that are computationall
 
 Instead of converting audio data into heavy 2D spectrogram images and using heavy resource-intensive computer vision architectures, this repository implements a specialized **1D Convolutional Neural Network**. Because audio feature frames represent sequential patterns evolving step-by-step, the 1D kernels slide strictly along the temporal scale, capturing structural signal traits much faster and using significantly less computational memory.
 
-| Layer (Type) | Output Shape | Param # | Description / Regularization |
-| :--- | :--- | :--- | :--- |
-| **Input** | (None, 40, 1) | 0 | Accepts 40-dimensional sequential MFCC tensors. |
-| **Conv1D (Layer 1)** | (None, 38, 128) | 512 | Extracts local acoustic transitions using 128 filters. |
-| **Batch Normalization** | (None, 38, 128) | 512 | Stabilizes intermediate activation distributions during step iterations. |
-| **MaxPool1D** | (None, 19, 128) | 0 | Downsamples sequence feature maps by half to isolate dominant patterns. |
-| **Conv1D (Layer 2)** | (None, 17, 256) | 98,560 | Captures higher-level variations with 256 filters. |
-| **Batch Normalization** | (None, 17, 256) | 1,024 | Prevents internal covariate shift across deeper layers. |
-| **MaxPool1D** | (None, 9, 256) | 0 | Multi-scale structural downsampling. |
-| **Conv1D (Layer 3)** | (None, 7, 256) | 196,864 | Captures comprehensive, global sequential tendencies. |
-| **Batch Normalization** | (None, 7, 256) | 1,024 | Final mathematical gradient distribution normalization. |
-| **MaxPool1D** | (None, 4, 256) | 0 | Packs spatial dimensions prior to vector flattening. |
-| **Flatten** | (None, 1024) | 0 | Collapses the sequential feature blocks into a single 1D vector. |
-| **Dense (Fully Connected)**| (None, 512) | 524,800 | Deep dense bottleneck with $L_2$ regularization parameters (`1e-2`). |
-| **Dropout** | (None, 512) | 0 | Drop rate of 30% to restrict representation bounds and fight overfitting. |
-| **Dense (Fully Connected)**| (None, 512) | 262,656 | Secondary deep inference block with $L_2$ regularizers (`1e-2`). |
-| **Dropout** | (None, 512) | 0 | Auxiliary overfitting constraints to stabilize test boundaries. |
-| **Dense (Output)** | (None, 114) | 58,482 | Multi-class Softmax layer translating scores to definitive percentages. |
+<p align="center">
+  <strong>[INSERT IMAGE: block_diagram.png (The vertical flowchart showing Raw Audio Input -> Preprocessing -> 1D-CNN Feature Extraction -> Dense Classification Head -> Final Prediction)]</strong>
+</p>
+
+### Detailed Model Topology
+
+<p align="center">
+  <strong>[INSERT IMAGE: model_summary.png (The Keras terminal output showing layer types conv1d, batch_normalization, max_pooling1d, output shapes, and parameters)]</strong>
+</p>
 
 * **Total Parameters:** 1,144,434 (~4.37 MB)
 * **Trainable Parameters:** 1,143,154 (~4.36 MB)
@@ -80,7 +71,16 @@ Instead of converting audio data into heavy 2D spectrogram images and using heav
 
 # 📊 Performance Analysis & Results
 
-The system was optimized using the **Adam Optimizer** over **700 epochs** matching validation goals through **Sparse Categorical Crossentropy Loss** calculations.
+The system was optimized using the **Adam Optimizer** (learning rate: `1e-4`). To prevent overfitting and capture the optimal weight state, **Early Stopping** was implemented with a patience of 15 epochs over a maximum threshold of **150 epochs**. 
+
+### Performance Metrics
+We utilize standard classification metrics to gauge performance:
+
+* **Categorical Accuracy:** Computes how frequently predictions match the ground-truth targets.
+  $$Accuracy = \frac{Correct Predictions}{Total Predictions}$$
+
+* **Sparse Categorical Crossentropy Loss:** Monitors predictive certainty penalization.
+  $$\mathcal{L} = -\sum_{i} y_i \log(\hat{y}_i)$$
 
 | Metric | Score |
 |---|---|
@@ -94,25 +94,41 @@ The system was optimized using the **Adam Optimizer** over **700 epochs** matchi
 
 # 📈 Training Analysis
 
-## Training vs Validation Accuracy
+### Epoch Training Log Trace
+<p align="center">
+  <strong>[INSERT IMAGE: training_terminal_output.png (The console printout showing the final epoch training progress and accuracy results)]</strong>
+</p>
 
-![Training Accuracy](images/training-graph.png)
+### Training vs Validation Accuracy & Loss
+<p align="center">
+  <strong>[INSERT IMAGE: training_curves.png (The dual plot showing Training vs Validation Accuracy and Training vs Validation Loss)]</strong>
+</p>
 
-## Confusion Matrix
+### Confusion Matrix
+<p align="center">
+  <strong>[INSERT IMAGE: confusion_matrix.png (The confusion matrix plot showing predicted vs true labels generated during testing)]</strong>
+</p>
 
-![Confusion Matrix](images/confusion-matrix.png)
+### Reconstructed Signal Waveform
+<p align="center">
+  <strong>[INSERT IMAGE: signal_waveform.png (The light blue waveshow diagram showing the signal amplitude across the time scale)]</strong>
+</p>
 
 ---
 
 # 💻 Streamlit Deployment
 
-## Streamlit Interface
+The local inference module is bundled as an interactive **Streamlit web application** that processes custom audio files on-the-fly and serves predictions instantly by utilizing cached `.keras` model states.
 
-![Streamlit UI](images/streamlit-ui.png)
+## Streamlit Interface
+<p align="center">
+  <strong>[INSERT IMAGE: streamlit-ui.png (The base look of your web application input view)]</strong>
+</p>
 
 ## Prediction Example
-
-![Prediction Example](images/prediction-example.png)
+<p align="center">
+  <strong>[INSERT IMAGE: streamlit_preview.png (The web browser window of the running Streamlit app showing a successful prediction, match confidence, and visual asset)]</strong>
+</p>
 
 ---
 
@@ -126,7 +142,7 @@ The system was optimized using the **Adam Optimizer** over **700 epochs** matchi
    ```
 2. Install the necessary system dependencies:
    ```bash
-   pip install tensorflow scikit-learn librosa numpy pandas matplotlib streamlit streamlit_extras opencv-python tqdm
+   pip install tensorflow scikit-learn librosa numpy pandas matplotlib streamlit streamlit_extras opencv-python tqdm IPython
    ```
 3. Boot up the user dashboard locally:
    ```bash
@@ -135,6 +151,27 @@ The system was optimized using the **Adam Optimizer** over **700 epochs** matchi
 
 ---
 
-# 👨‍💻 Author
+# 👤 Developer Profile & Professional Certifications
 
 **Mukundh Reddy**
+
+### MathWorks Professional Certifications
+The developer holds the following professional training credentials verified by **MathWorks** for core signal operations and deep neural net workflows:
+
+<p align="center">
+  <strong>[INSERT IMAGE: mathworks_cert_ml.png (The training certificate for Machine Learning Techniques in MATLAB)]</strong>
+</p>
+<p align="center">
+  <strong>[INSERT IMAGE: mathworks_cert_signal_class.png (The training certificate for Signal Classification with Deep Learning)]</strong>
+</p>
+<p align="center">
+  <strong>[INSERT IMAGE: mathworks_cert_feature_extraction.png (The training certificate for Feature Extraction Techniques for Signals)]</strong>
+</p>
+<p align="center">
+  <strong>[INSERT IMAGE: mathworks_cert_signal_onramp.png (The training certificate for Signal Processing Onramp)]</strong>
+</p>
+
+---
+
+# 📜 License
+This project is open-source and licensed under the **MIT License**.
