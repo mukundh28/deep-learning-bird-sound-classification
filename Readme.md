@@ -53,15 +53,11 @@ Raw time-domain audio waves contain immense sample rates that are computationall
 
 Instead of converting audio data into heavy 2D spectrogram images and using heavy resource-intensive computer vision architectures, this repository implements a specialized **1D Convolutional Neural Network**. Because audio feature frames represent sequential patterns evolving step-by-step, the 1D kernels slide strictly along the temporal scale, capturing structural signal traits much faster and using significantly less computational memory.
 
-<p align="center">
-  <strong>[INSERT IMAGE: block_diagram.png (The vertical flowchart showing Raw Audio Input -> Preprocessing -> 1D-CNN Feature Extraction -> Dense Classification Head -> Final Prediction)]</strong>
-</p>
+![System Block Diagram](images/block-diagram.png)
 
 ### Detailed Model Topology
 
-<p align="center">
-  <strong>[INSERT IMAGE: model_summary.png (The Keras terminal output showing layer types conv1d, batch_normalization, max_pooling1d, output shapes, and parameters)]</strong>
-</p>
+![Model Summary](images/model-summary.png)
 
 * **Total Parameters:** 1,144,434 (~4.37 MB)
 * **Trainable Parameters:** 1,143,154 (~4.36 MB)
@@ -95,24 +91,16 @@ We utilize standard classification metrics to gauge performance:
 # 📈 Training Analysis
 
 ### Epoch Training Log Trace
-<p align="center">
-  <strong>[INSERT IMAGE: training_terminal_output.png (The console printout showing the final epoch training progress and accuracy results)]</strong>
-</p>
+![Training Terminal Output](images/training-terminal-output.png)
 
 ### Training vs Validation Accuracy & Loss
-<p align="center">
-  <strong>[INSERT IMAGE: training_curves.png (The dual plot showing Training vs Validation Accuracy and Training vs Validation Loss)]</strong>
-</p>
+![Training Accuracy](images/training-graph.png)
 
 ### Confusion Matrix
-<p align="center">
-  <strong>[INSERT IMAGE: confusion_matrix.png (The confusion matrix plot showing predicted vs true labels generated during testing)]</strong>
-</p>
+![Confusion Matrix](images/confusion-matrix.png)
 
 ### Reconstructed Signal Waveform
-<p align="center">
-  <strong>[INSERT IMAGE: signal_waveform.png (The light blue waveshow diagram showing the signal amplitude across the time scale)]</strong>
-</p>
+![Signal Waveform](images/signal-waveform.png)
 
 ---
 
@@ -121,14 +109,10 @@ We utilize standard classification metrics to gauge performance:
 The local inference module is bundled as an interactive **Streamlit web application** that processes custom audio files on-the-fly and serves predictions instantly by utilizing cached `.keras` model states.
 
 ## Streamlit Interface
-<p align="center">
-  <strong>[INSERT IMAGE: streamlit-ui.png (The base look of your web application input view)]</strong>
-</p>
+![Streamlit UI](images/streamlit-ui.png)
 
 ## Prediction Example
-<p align="center">
-  <strong>[INSERT IMAGE: streamlit_preview.png (The web browser window of the running Streamlit app showing a successful prediction, match confidence, and visual asset)]</strong>
-</p>
+![Prediction Example](images/prediction-example.png)
 
 ---
 
@@ -151,27 +135,10 @@ The local inference module is bundled as an interactive **Streamlit web applicat
 
 ---
 
-# 👤 Developer Profile & Professional Certifications
+# 👤 Author
 
 **Mukundh Reddy**
 
-### MathWorks Professional Certifications
-The developer holds the following professional training credentials verified by **MathWorks** for core signal operations and deep neural net workflows:
-
-<p align="center">
-  <strong>[INSERT IMAGE: mathworks_cert_ml.png (The training certificate for Machine Learning Techniques in MATLAB)]</strong>
-</p>
-<p align="center">
-  <strong>[INSERT IMAGE: mathworks_cert_signal_class.png (The training certificate for Signal Classification with Deep Learning)]</strong>
-</p>
-<p align="center">
-  <strong>[INSERT IMAGE: mathworks_cert_feature_extraction.png (The training certificate for Feature Extraction Techniques for Signals)]</strong>
-</p>
-<p align="center">
-  <strong>[INSERT IMAGE: mathworks_cert_signal_onramp.png (The training certificate for Signal Processing Onramp)]</strong>
-</p>
-
----
 
 # 📜 License
 This project is open-source and licensed under the **MIT License**.
