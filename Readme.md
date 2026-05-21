@@ -53,12 +53,6 @@ Raw time-domain audio waves contain immense sample rates that are computationall
 
 Instead of converting audio data into heavy 2D spectrogram images and using heavy resource-intensive computer vision architectures, this repository implements a specialized **1D Convolutional Neural Network**. Because audio feature frames represent sequential patterns evolving step-by-step, the 1D kernels slide strictly along the temporal scale, capturing structural signal traits much faster and using significantly less computational memory.
 
-![System Block Diagram](images/block-diagram.png)
-
-### Detailed Model Topology
-
-![Model Summary](images/model-summary.png)
-
 * **Total Parameters:** 1,144,434 (~4.37 MB)
 * **Trainable Parameters:** 1,143,154 (~4.36 MB)
 * **Non-trainable Parameters:** 1,280 (~5.00 KB)
@@ -90,17 +84,11 @@ We utilize standard classification metrics to gauge performance:
 
 # 📈 Training Analysis
 
-### Epoch Training Log Trace
-![Training Terminal Output](images/training-terminal-output.png)
-
 ### Training vs Validation Accuracy & Loss
 ![Training Accuracy](images/training-graph.png)
 
 ### Confusion Matrix
 ![Confusion Matrix](images/confusion-matrix.png)
-
-### Reconstructed Signal Waveform
-![Signal Waveform](images/signal-waveform.png)
 
 ---
 
