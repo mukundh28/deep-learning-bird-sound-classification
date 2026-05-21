@@ -126,7 +126,3 @@ The local inference module is bundled as an interactive **Streamlit web applicat
 # 👤 Author
 
 **Mukundh Reddy**
-
-
-# 📜 License
-This project is open-source and licensed under the **MIT License**.
