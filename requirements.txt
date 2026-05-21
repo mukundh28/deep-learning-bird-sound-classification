@@ -1,0 +1,10 @@
+tensorflow~=2.21.0rc0
+scikit-learn~=1.8.0
+opencv-python~=4.13.0.92
+librosa~=0.11.0
+numpy~=2.4.2
+pandas~=2.3.3
+matplotlib~=3.10.8
+streamlit~=1.54.0
+streamlit_extras
+tqdm~=4.67.3
